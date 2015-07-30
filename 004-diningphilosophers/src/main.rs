@@ -1,3 +1,5 @@
+use std::thread;
+
 struct Thinker {
     name: String,
 }
@@ -10,6 +12,8 @@ impl Thinker {
     }
 
     fn eat(&self) {
+        println!("{} tucks in.", self.name);
+        thread::sleep_ms(2000);
         println!("{} burps.", self.name);
     }
 }
@@ -22,7 +26,14 @@ fn main() {
         Thinker::new("Nietzsche"),
         Thinker::new("Foucault"),
     ];
-    for t in &thinkers {
-        t.eat();
+
+    let handles: Vec<_> = thinkers.into_iter().map(|p| {
+        thread::spawn(move || {
+            p.eat();
+        })
+    }).collect();
+
+    for h in handles {
+        h.join().unwrap();
     }
 }
