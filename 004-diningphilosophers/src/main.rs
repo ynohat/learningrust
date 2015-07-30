@@ -8,12 +8,21 @@ impl Thinker {
             name: name.to_string(),
         }
     }
+
+    fn eat(&self) {
+        println!("{} burps.", self.name);
+    }
 }
 
 fn main() {
-    let p1 = Thinker::new("Spinoza");
-    let p2 = Thinker::new("Deleuze");
-    let p3 = Thinker::new("Marx");
-    let p4 = Thinker::new("Nietzsche");
-    let p5 = Thinker::new("Foucault");
+    let thinkers = vec![
+        Thinker::new("Spinoza"),
+        Thinker::new("Deleuze"),
+        Thinker::new("Marx"),
+        Thinker::new("Nietzsche"),
+        Thinker::new("Foucault"),
+    ];
+    for t in &thinkers {
+        t.eat();
+    }
 }
